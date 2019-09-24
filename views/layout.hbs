@@ -8,6 +8,20 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 <body>
+  <nav>
+    <ul>
+      {{#if user}}
+        <li>
+          <form action="/enterprise/logout" method="POST">
+          <button type="submit">log out</button>
+          </form>
+        </li>
+        {{else}}
+          <li><a href="/enterprise/sign-up">Sign Up</a></li>
+          <li><a href="/enterprise/login">Login</a></li>
+      {{/if}}
+    </ul>
+  </nav>
 
   {{{body}}}
 

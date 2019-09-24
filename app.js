@@ -8,10 +8,17 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const bcrypt       = require('bcryptjs')
+const session      = require("express-session");
+const flash        = require('connect-flash');
+const passport     = require('passport')
+const LocalStrategy= require('passport-local').Strategy
 
+
+const Enterprise = require('./models/Enterprise')
 
 mongoose
-  .connect('mongodb://localhost/routedroid', {useNewUrlParser: true})
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -31,7 +38,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Express View engine setup
-
 app.use(require('node-sass-middleware')({
   src:  path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -47,12 +53,63 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
 // default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
+app.locals.title = 'RouteDroid';
 
+// Passport setup
+app.use(session({
+  secret: "our-passport-local-strategy-app",
+  resave: true,
+  saveUninitialized: true
+}));
+
+passport.serializeUser((user, cb) => {
+  cb(null, user._id);
+});
+
+passport.deserializeUser((id, cb) => {
+  Enterprise.findById(id, (err, user) => {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
+passport.use('enterprise', new LocalStrategy((username, password, next) => {
+  Enterprise.findOne({ username }, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(null, false, { message: "Incorrect username or email" });
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      return next(null, false, { message: "Incorrect password" });
+    }
+
+    return next(null, user);
+  });
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  res.locals.errorMessage = req.flash('error')
+  next();
+})
 
 
 const index = require('./routes/index');
 app.use('/', index);
+
+const enterprise = require('./routes/enterprise');
+app.use('/enterprise', enterprise);
+
+const search = require('./routes/search');
+app.use('/search', search);
 
 
 module.exports = app;
