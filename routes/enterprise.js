@@ -42,7 +42,40 @@ router.post('/login', passport.authenticate("enterprise", {
   passReqToCallback: true
 }));
 
-// router.use();
+router.use((req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect("/enterprise/login");
+  }
+})
+
+router.post('/:enterprise_id/update', (req, res, next) =>{
+  const update = {
+    name: req.body.name,
+    location: req.body.location,
+    email: req.body.email
+  }
+  Enterprise.findByIdAndUpdate(req.params.enterprise_id, update)
+    .then(responseFromDB=>{
+      console.log("Sucessfully updated", responseFromDB);
+      res.redirect(`/enterprise/${req.user._id}/`)
+    })
+    .catch(err => console.error(err));
+});
+
+router.post('/:enterprise_id/delete', (req, res, next) => {
+  Enterprise.findByIdAndDelete(req.params.enterprise_id)
+    .then(responseFromDB => {
+      console.log("Sucessfully deleted", responseFromDB);      
+      res.redirect(`/`)
+    })
+    .catch(err => console.error(err));
+});
+
+router.get('/:enterprise_id', (req, res, next) => {
+  res.render('enterprise-views/profile');
+});
 
 router.get('/logout', (req, res, next) => {
   req.logout();

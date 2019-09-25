@@ -7,7 +7,7 @@ const enterpriseSchema = new Schema({
   username: String,
   password: String,
   email: String,
-
+  location: String
 })
 
 const Enterprise = mongoose.model('Enterprise', enterpriseSchema)
