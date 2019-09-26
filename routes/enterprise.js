@@ -44,7 +44,7 @@ router.post('/login', passport.authenticate("enterprise", {
 
 // router.use();
 
-router.post('/logout', (req, res, next) => {
+router.get('/logout', (req, res, next) => {
   req.logout();
   res.redirect('/')
 });

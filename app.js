@@ -13,7 +13,10 @@ const session      = require("express-session");
 const flash        = require('connect-flash');
 const passport     = require('passport')
 const LocalStrategy= require('passport-local').Strategy
-
+const googleMapsClient = require('@google/maps').createClient({
+  key: process.env.GOOGLE_MAPS_KEY
+});
+const axios        = require("axios")
 
 const Enterprise = require('./models/Enterprise')
 

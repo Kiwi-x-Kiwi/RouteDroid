@@ -1,0 +1,39 @@
+<form id ="route-form" action="/search" method="GET">
+
+  <label for="origins">Origin: </label>
+  {{#if prefilled}}
+    <input type="text" id="origins" name="origins" value="{{prefilled.origins}}"><br>
+    {{else}}
+      <input type="text" id="origins" name="origins"><br>
+  {{/if}}
+
+  <label for="add-waypoints">Waypoints: </label>
+  <ol id = "waypoints-list">
+    {{#if prefilled}}
+      {{#each prefilled.waypoints}}
+        <li draggable="true" class="waypoints">
+          <input type="text" name="waypoints" value="{{this}}">
+        </li>
+      {{/each}}
+    {{/if}}
+
+  </ol>
+
+  <input type="text" id="add-waypoints" placeholder="Add additional waypoint">
+  <button id = "add-waypoints-btn" type="button">Add to Route</button><br>
+
+  <button type="submit">Plan Route</button>
+</form>
+
+{{#if prefilled}}
+  <iframe 
+    width="600" 
+    height="450" 
+    frameborder="0" 
+    style="border:0"
+    src="https://www.google.com/maps/embed/v1/directions?origin={{origin}}&waypoints={{waypoints}}&destination={{origin}}&zoom=13&key={{key}}"
+    allowfullscreen>
+  </iframe>
+{{/if}}
+
+<script src="/javascripts/search.js"></script>
