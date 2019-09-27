@@ -12,6 +12,7 @@ router.get('/sign-up', (req, res, next) => {
 
 router.post('/sign-up', (req, res, next) => {
   let name = req.body.name
+  let location = req.body.location
   let email = req.body.email
   let username = req.body.username
   let password = req.body.password
@@ -22,6 +23,7 @@ router.post('/sign-up', (req, res, next) => {
 
   Enterprise.create({
     name: name,
+    location: req.body.location,
     email: email,
     username: username,
     password: hash,
@@ -73,13 +75,14 @@ router.post('/:enterprise_id/delete', (req, res, next) => {
     .catch(err => console.error(err));
 });
 
-router.get('/:enterprise_id', (req, res, next) => {
-  res.render('enterprise-views/profile');
-});
-
 router.get('/logout', (req, res, next) => {
   req.logout();
   res.redirect('/')
 });
+
+router.get('/:enterprise_id', (req, res, next) => {
+  res.render('enterprise-views/profile');
+});
+
 
 module.exports = router;

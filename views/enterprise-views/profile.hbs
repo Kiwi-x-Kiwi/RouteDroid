@@ -1,21 +1,23 @@
-<h1>Enterprise Information Update Form</h1>
+<div class="form form-profile">
+  <h1>Enterprise Information Update Form</h1>
 
-<form action="/enterprise/{{user._id}}/update" method="POST">
+  <form action="/enterprise/{{user._id}}/update" method="POST">
 
-<label for="name">Enterprise Name</label>
-<input id="name" name="name" type="text" value="{{user.name}}"><br>
+  <label for="name">Enterprise Name</label>
+  <input id="name" name="name" type="text" value="{{user.name}}"><br>
 
-<label for="location">Enterprise Location</label>
-<input id="location" name="location" type="text" value="{{user.location}}"><br>
+  <label for="location">Enterprise Location</label>
+  <input id="location" name="location" type="text" value="{{user.location}}"><br>
 
-<label for="email">Email</label>
-<input id="email" name="email" type="email" value="{{user.email}}"><br>
+  <label for="email">Email</label>
+  <input id="email" name="email" type="email" value="{{user.email}}"><br>
 
-<button type="submit">Update</button>
+  <button type="submit">Update</button>
 
-</form>
+  </form>
 
-<h2>Delete Enterprise Account</h2>
-<button id="delete-btn" data-id="{{user.id}}">Delete!</button>
+  <h2>Delete Enterprise Account</h2>
+  <button id="delete-btn" data-id="{{user.id}}">Delete</button>
 
-<script src="/javascripts/profile.js"></script>
+  <script src="/javascripts/profile.js"></script>
+</div>

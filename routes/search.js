@@ -39,17 +39,17 @@ router.get('/', (req, res, next) => {
 
   waypoints = [].concat(waypoints).join("|").split(" ").join("+");
 
-  console.log(typeof(waypoints));
+  // console.log(typeof(waypoints));
 
-  console.log("both ", originsAndDestinations);
-  console.log("new waypoints ", waypoints);
+  // console.log("both ", originsAndDestinations);
+  // console.log("new waypoints ", waypoints);
 
-  axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${originsAndDestinations}&destinations=${waypoints}&key=${process.env.GOOGLE_MAPS_KEY}`)
-    .then(responseFromAPI =>{
-      res.send(responseFromAPI.data);
-      console.log(responseFromAPI.data)  
-    })
-    .catch(err => console.error(err))
+  // axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${originsAndDestinations}&destinations=${waypoints}&key=${process.env.GOOGLE_MAPS_KEY}`)
+  //   .then(responseFromAPI =>{
+  //     res.send(responseFromAPI.data);
+  //     console.log(responseFromAPI.data)  
+  //   })
+  //   .catch(err => console.error(err))
 
   res.render('search-views/search', {
     origin: origin,
