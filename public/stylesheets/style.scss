@@ -140,9 +140,28 @@ nav > ul > li > a:hover{
   color: #EFEFEF;
 }
 
-// #query-panel{
-//   margin-top: 10vh;
-//   height:90vh;
-//   width: 30vw;
-//   background-color: #A4C639
-// }
+#search-wrapper{
+  padding-top: 50px;  
+  height: 80vh;
+  width: 90vw;
+  display: flex;
+  flex-direction: row;
+}
+
+#search-wrapper > div{
+  height: 95%;
+  // background-color: blue;
+}
+
+#query-panel{
+  width: 30%; 
+  font-size: 1.2rem;
+}
+
+#query-panel input{
+  width: 92%;
+}
+
+#origins{
+  margin-bottom: 15px;
+}
