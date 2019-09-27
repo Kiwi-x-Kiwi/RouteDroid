@@ -23,7 +23,7 @@
 
       <input type="text" id="add-waypoints" placeholder="Add additional waypoint">
       <button id = "add-waypoints-btn" type="button">Add to Route</button><br>
-
+      
       <button type="submit">Plan Route</button>
     </form>
   </div>
@@ -38,6 +38,13 @@
         src="https://www.google.com/maps/embed/v1/directions?origin={{origin}}&waypoints={{waypoints}}&destination={{origin}}&zoom=13&key={{key}}"
         allowfullscreen>
       </iframe>
+      {{else}}
+        {{#if user.location}}
+          <iframe width="600" height="450" frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/place?key={{key}}&q={{user.location}}"
+            allowfullscreen>
+          </iframe>
+        {{/if}}
     {{/if}}
   </div>
 </div>
